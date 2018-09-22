@@ -32,10 +32,10 @@ namespace Vidly.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Customer customer)
+        public ActionResult Save(Customer customer)
         {
             _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return RedirectToAction("Index", "Customers");
         }
 

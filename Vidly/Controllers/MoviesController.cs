@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Web.Mvc;
 using Vidly.Models;
 using Vidly.ViewModels;
+using System;
 
 namespace Vidly.Controllers
 {
@@ -19,16 +20,56 @@ namespace Vidly.Controllers
         {
             return View(new MoviesViewModel { Movies = _context.Movies.ToList() });
         }
-        
 
-        [Route("movies/details/{id}")]
-        public ActionResult Details(int id)
+
+        public ActionResult Edit(int id)
         {
-            var customer = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
-            if (customer == null)
+            var movie = _context.Movies.Single(m => m.Id == id);
+
+            if (movie == null)
                 return HttpNotFound();
 
-            return View(customer);
+            var movieModel = new MovieFormViewModel()
+            {
+                Movie = movie,
+                MovieGenres = _context.MovieGenres.ToList()
+            };
+            return View("MovieForm", movieModel);
+        }
+
+        [HttpPost]
+        public ActionResult Save(MovieFormViewModel m)
+        {
+            var movie = m.Movie;
+            if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                var movieInDb = _context.Movies.Single(c => c.Id == movie.Id);
+
+                movieInDb.Name = movie.Name;
+                movieInDb.ReleasedDate = movie.ReleasedDate;
+                movieInDb.MovieGenreId = movie.MovieGenreId;
+                movieInDb.InStock = movie.InStock;
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Movies");
+        }
+
+        public ActionResult New()
+        {
+
+            var movieModel = new MovieFormViewModel()
+            {
+                Movie = new Movie(),
+                MovieGenres = _context.MovieGenres.ToList()
+            };
+            return View("MovieForm", movieModel);
         }
     }
 }

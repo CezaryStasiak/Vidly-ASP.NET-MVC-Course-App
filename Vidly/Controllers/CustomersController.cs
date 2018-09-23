@@ -34,6 +34,15 @@ namespace Vidly.Controllers
         [HttpPost]
         public ActionResult Save(Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+                return View("CustomerForm", viewModel);
+            }
             if (customer.Id == 0)
                 _context.Customers.Add(customer);
             else
@@ -56,17 +65,7 @@ namespace Vidly.Controllers
             var customers = _context.Customers.Include(c => c.MembershipType).ToList();
             return View(new CustomersViewModel { Customers = customers });
         }
-
-        [Route("Customers/Details/{id}")]
-        public ActionResult Details(int id)
-        {
-            var customer = _context.Customers.Include(c => c.MembershipType).SingleOrDefault(c => c.Id == id);
-            if (customer == null)
-                return HttpNotFound();
-
-            return View(customer);
-        }
-
+        
         public ActionResult Edit(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);

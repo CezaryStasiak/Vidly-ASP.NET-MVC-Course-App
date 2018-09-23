@@ -4,7 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>Customers</h2>
-@{ 
+@Html.ActionLink("Add Customer", "New", "Customers", null, new { @class = "btn btn-primary" })
+@{
     if (Model.Customers.Count <= 0)
     {
         <p>We have no customers!</p>
@@ -14,10 +15,10 @@
         <table class="table table-bordered table-hover">
             @foreach (var customer in Model.Customers)
             {
-            <tr>
-                <td><h2>@Html.ActionLink($"{customer.Name}", "Edit", "Customers", new { id = customer.Id }, null)</h2></td>
-                <td><h2>@customer.MembershipType.Name</h2></td>
-            </tr>
+                <tr>
+                    <td><h2>@Html.ActionLink($"{customer.Name}", "Edit", "Customers", new { id = customer.Id }, null)</h2></td>
+                    <td><h2>@customer.MembershipType.Name</h2></td>
+                </tr>
             }
         </table>
     }

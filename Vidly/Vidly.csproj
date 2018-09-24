@@ -246,6 +246,14 @@
     <Compile Include="Migrations\201809231951520_CustomerUpdate.Designer.cs">
       <DependentUpon>201809231951520_CustomerUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809240816543_MovieUpdate.cs" />
+    <Compile Include="Migrations\201809240816543_MovieUpdate.Designer.cs">
+      <DependentUpon>201809240816543_MovieUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809241036141_MovieUpdateNullables.cs" />
+    <Compile Include="Migrations\201809241036141_MovieUpdateNullables.Designer.cs">
+      <DependentUpon>201809241036141_MovieUpdateNullables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -381,6 +389,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809231951520_CustomerUpdate.resx">
       <DependentUpon>201809231951520_CustomerUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809240816543_MovieUpdate.resx">
+      <DependentUpon>201809240816543_MovieUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809241036141_MovieUpdateNullables.resx">
+      <DependentUpon>201809241036141_MovieUpdateNullables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

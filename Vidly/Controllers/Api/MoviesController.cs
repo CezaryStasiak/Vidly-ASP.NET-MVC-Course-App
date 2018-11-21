@@ -51,5 +51,27 @@ namespace Vidly.Controllers.Api
 
             return Created(new Uri(Request.RequestUri + "/" + movie.Id), movieDto);
         }
+
+        [HttpPut]
+        public IHttpActionResult UpdateMovie(int id, MovieDto movieDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var movieInDb = _context.Movies.SingleOrDefault(m => m.Id == id);
+
+            if (movieInDb == null)
+            {
+                return NotFound();
+            }
+
+            Mapper.Map(movieDto, movieInDb);
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
     }
 }

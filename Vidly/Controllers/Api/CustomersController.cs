@@ -41,20 +41,20 @@ namespace Vidly.Controllers.Api
 
         // post api/customer
         [HttpPost]
-        public CustomerDto PostCustomer(CustomerDto customerDto)
+        public IHttpActionResult PostCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
             {
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
 
             var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
             _context.Customers.Add(customer);
             _context.SaveChanges();
 
-            customerDto.Id = customer.Id;   
+            customerDto.Id = customer.Id;
 
-            return customerDto;
+            return Created(new Uri(Request.RequestUri + "/" + customer.Id), customerDto);
         }
 
         // put api/customer/1
